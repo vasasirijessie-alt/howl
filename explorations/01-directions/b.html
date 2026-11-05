@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <title>Howl — After Hours</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body class="direction direction--b" data-direction="b">
+    <a class="skip-link" href="#posts">Skip to posts</a>
+    <header class="mobile-top">
+      <a class="wordmark" href="index.html">Howl</a>
+      <a class="howl-button" href="#composer">Howl</a>
+      <nav class="mobile-links" aria-label="Main navigation">
+        <a href="#home" aria-current="page">Home</a>
+        <a href="#posts">Posts</a>
+        <a href="index.html">Round overview</a>
+      </nav>
+    </header>
+
+    <div class="layout">
+      <aside class="left-rail">
+        <a class="wordmark" href="index.html">Howl</a>
+        <nav class="side-links" aria-label="Main navigation">
+          <a href="#home" aria-current="page">Home</a>
+          <a href="#posts">Posts</a>
+          <a href="index.html">Round overview</a>
+        </nav>
+        <a class="howl-button" href="#composer">Howl</a>
+      </aside>
+
+      <main class="feed-column" id="home">
+        <div class="feed-heading">
+          <h1>Home</h1>
+          <span class="direction-stamp">B · After Hours</span>
+        </div>
+        <form class="composer" id="composer">
+          <label for="post-text">Write a post</label>
+          <textarea
+            id="post-text"
+            name="post"
+            rows="2"
+            maxlength="280"
+            placeholder="What's happening on campus?"
+            required
+          ></textarea>
+          <button type="submit">Post</button>
+        </form>
+        <section class="posts-section" aria-labelledby="posts">
+          <h2 id="posts">Posts</h2>
+          <ul class="post-list" id="post-list"></ul>
+        </section>
+        <p class="status-message" id="status-message" role="status" aria-live="polite"></p>
+      </main>
+
+      <aside class="right-rail" aria-labelledby="places-title">
+        <h2 id="places-title">Places in the feed</h2>
+        <ul>
+          <li>The Brickyard</li>
+          <li>Hunt Library</li>
+          <li>Talley Student Union</li>
+          <li>Carter-Finley Stadium</li>
+        </ul>
+      </aside>
+    </div>
+  </body>
+</html>
