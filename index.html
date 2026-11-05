@@ -3,13 +3,70 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f2ee" />
     <title>Howl</title>
+    <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <main>
-      <h1>Howl</h1>
-      <ul id="posts"></ul>
-    </main>
+    <a class="skip-link" href="#posts">Skip to posts</a>
+    <header class="mobile-header">
+      <a class="wordmark" href="#home">Howl</a>
+      <a class="howl-button" href="#composer">Howl</a>
+      <nav class="mobile-navigation" aria-label="Main navigation">
+        <a href="#home" aria-current="page">Home</a>
+        <a href="#posts">Posts</a>
+      </nav>
+    </header>
+    <div class="page-layout">
+      <aside class="left-rail">
+        <a class="wordmark" href="#home">Howl</a>
+        <nav class="side-navigation" aria-label="Main navigation">
+          <a href="#home" aria-current="page">Home</a>
+          <a href="#posts">Posts</a>
+        </nav>
+        <a class="howl-button" href="#composer">Howl</a>
+      </aside>
+      <main class="feed-column" id="home">
+        <header class="feed-header">
+          <h1>Home</h1>
+        </header>
+        <div class="feed-filters" role="group" aria-label="Filter posts">
+          <button type="button" aria-pressed="true" data-filter="all">All</button>
+          <button type="button" aria-pressed="false" data-filter="located">
+            With a place
+          </button>
+          <button type="button" aria-pressed="false" data-filter="unlocated">
+            No location
+          </button>
+        </div>
+        <form class="composer" id="composer">
+          <label for="post-text">Write a post</label>
+          <textarea
+            id="post-text"
+            name="post"
+            rows="2"
+            maxlength="280"
+            placeholder="What's happening on campus?"
+            required
+          ></textarea>
+          <button type="submit">Post</button>
+        </form>
+        <section class="posts-section" aria-labelledby="posts">
+          <h2 id="posts">Posts</h2>
+          <ul class="post-list" id="post-list"></ul>
+        </section>
+        <p class="status-message" id="status-message" role="status" aria-live="polite"></p>
+      </main>
+      <aside class="right-rail" aria-labelledby="places-title">
+        <h2 id="places-title">Places in the feed</h2>
+        <ul>
+          <li>The Brickyard</li>
+          <li>Hunt Library</li>
+          <li>Talley Student Union</li>
+          <li>Carter-Finley Stadium</li>
+        </ul>
+      </aside>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

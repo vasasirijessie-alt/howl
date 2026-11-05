@@ -60,12 +60,122 @@ const posts = [
   },
 ];
 
-const list = document.querySelector("#posts");
+const names = [
+  "Maya R.",
+  "Jordan T.",
+  "Alex P.",
+  "Sam K.",
+  "Riley C.",
+  "Avery L.",
+  "Noah D.",
+  "Kai M.",
+  "Taylor S.",
+  "Morgan B.",
+  "Jamie W.",
+  "Casey H.",
+  "Drew F.",
+  "Emery G.",
+  "Quinn V.",
+];
+const list = document.querySelector("#post-list");
+const form = document.querySelector("#composer");
+const textarea = document.querySelector("#post-text");
+const status = document.querySelector("#status-message");
 
-for (const post of posts) {
+function initials(name) {
+  return name
+    .split(" ")
+    .map((part) => part[0])
+    .join("");
+}
+
+function renderPost(post) {
   const item = document.createElement("li");
-  item.textContent = post.location
-    ? `${post.text} — ${post.location}`
-    : post.text;
-  list.append(item);
+  item.className = "post";
+  item.dataset.located = String(Boolean(post.location));
+
+  const avatar = document.createElement("span");
+  avatar.className = "avatar";
+  avatar.setAttribute("role", "img");
+  avatar.setAttribute("aria-label", `${post.author} avatar`);
+  avatar.textContent = initials(post.author);
+
+  const header = document.createElement("div");
+  header.className = "post-header";
+  const author = document.createElement("span");
+  author.className = "post-author";
+  author.textContent = post.author;
+  header.append(author);
+
+  const text = document.createElement("p");
+  text.className = "post-text";
+  text.textContent = post.text;
+
+  const footer = document.createElement("div");
+  footer.className = "post-footer";
+  const reaction = document.createElement("button");
+  reaction.className = "react-button";
+  reaction.type = "button";
+  reaction.setAttribute("aria-pressed", "false");
+  reaction.setAttribute("aria-label", "Howl at this post");
+  reaction.textContent = "Howl";
+  reaction.addEventListener("click", () => {
+    const active = reaction.getAttribute("aria-pressed") !== "true";
+    reaction.setAttribute("aria-pressed", String(active));
+    reaction.textContent = active ? "Howled" : "Howl";
+    reaction.setAttribute(
+      "aria-label",
+      active ? "Remove your Howl from this post" : "Howl at this post",
+    );
+  });
+  footer.append(reaction);
+
+  if (post.location) {
+    const location = document.createElement("span");
+    location.className = "post-location";
+    location.textContent = post.location;
+    footer.append(location);
+  }
+
+  item.append(avatar, header, text, footer);
+  return item;
+}
+
+function addPost(post) {
+  list.prepend(renderPost(post));
+}
+
+posts.forEach((post, index) => {
+  list.append(renderPost({ ...post, author: names[index] }));
+});
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const text = textarea.value.trim();
+  if (!text) {
+    textarea.focus();
+    return;
+  }
+
+  addPost({ text, author: "You" });
+  textarea.value = "";
+  status.textContent = "Post added.";
+});
+
+for (const filter of document.querySelectorAll("[data-filter]")) {
+  filter.addEventListener("click", () => {
+    for (const button of document.querySelectorAll("[data-filter]")) {
+      button.setAttribute("aria-pressed", String(button === filter));
+    }
+
+    for (const post of list.children) {
+      const visible =
+        filter.dataset.filter === "all" ||
+        (filter.dataset.filter === "located" &&
+          post.dataset.located === "true") ||
+        (filter.dataset.filter === "unlocated" &&
+          post.dataset.located === "false");
+      post.hidden = !visible;
+    }
+  });
 }
